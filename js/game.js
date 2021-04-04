@@ -11,6 +11,7 @@ function startNewGame(event)
     dealtCards.length = 0;
 
     resetPlayersStatusBar();
+    hidePlayerCards();
 
     let minimumNumberOfPlayers = 2;
     let maximumNumberOfPlayers = 4;
@@ -43,6 +44,8 @@ function startNewGame(event)
     updatePlayersStatusBar(numberOfPlayers);
 
     dealCards();
+
+    showPlayerCards();
 }
 
 function dealCards()
@@ -66,6 +69,28 @@ function dealCards()
     }
 
     leftCards = [...cardsArrayClone];
+}
+
+function showPlayerCards()
+{
+    let humanPlayerCardsSection = document.getElementById('human-player-cards');
+
+    for (cardIndex in players[0].cards)
+    {
+        let card = players[0].cards[cardIndex];
+        let img = document.getElementById(`human-player-card-${parseInt(cardIndex) + 1}`);
+
+        img.setAttribute('src', `images/${card.picture}`);
+    }
+
+    humanPlayerCardsSection.classList.remove('hide');
+}
+
+function hidePlayerCards()
+{
+    let humanPlayerCardsSection = document.getElementById('human-player-cards');
+
+    humanPlayerCardsSection.classList.add('hide');
 }
 
 function updatePlayersStatusBar(numberOfPlayers)

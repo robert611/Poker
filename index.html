@@ -10,26 +10,24 @@
     <title>Play Poker</title>
 </head>
 <body>
+    <main>
+        <header class="container mt-5">
+            <h3 class="text-center mb-4">Wybierz liczbę graczy</h3>
 
-    <header class="container mt-5">
-        <h3 class="text-center mb-4">Wybierz liczbę graczy</h3>
+            <form class="text-center">
+                <div class="mb-3">
+                    <label for="players-number-input" class="form-label">Liczba graczy</label>
+                    <input type="number" class="form-control" min="2" max="4" id="players-number-input" placeholder="2 - 4">
+                </div>
 
-        <form class="text-center">
-            <div class="mb-3">
-                <label for="players-number-input" class="form-label">Liczba graczy</label>
-                <input type="number" class="form-control" min="2" max="4" id="players-number-input" placeholder="2 - 4">
-            </div>
+                <button type="submit" class="btn btn-primary" id="start-new-game-button">Start new game</button>
+            </form>
 
-            <button type="submit" class="btn btn-primary" id="start-new-game-button">Start new game</button>
-        </form>
+        </header>
 
-    </header>
+        <hr class="mt-5">
 
-    <hr class="mt-5">
-
-    <main class="container mt-15">
-
-        <section id="taken-players">
+        <section id="taken-players" class="container mt-15">
             <div class="row text-center">
                 <div class="col-12 col-sm-6 col-md-3">
                     <img class="img-fluid" src="https://img.icons8.com/wired/160/000000/cards.png" alt="carts">
@@ -53,11 +51,37 @@
             </div>
         </section>
 
-    </main>   
+        <hr class="mt-5">
 
-    <footer class="text-center fixed-bottom p-4">
-        <a href="https://icons8.com/icon/49139/cards">Cards icon by Icons8</a>
-    </footer>
+        <section id="human-player-cards" class="hide container mt-5 mb-5">
+
+            <h3 class="text-center mb-5">Twoje karty</h3>
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                    <div class="col-md-2">
+                        <img src="images/10_karo.png" id="human-player-card-1" class="img-fluid" alt="human-player-card"/>
+                    </div>
+                    <div class="col-md-2">
+                        <img src="images/as_pik.png" id="human-player-card-2" class="img-fluid" alt="human-player-card"/>
+                    </div>
+                    <div class="col-md-2">
+                        <img src="images/quenn_kier.png" id="human-player-card-3" class="img-fluid" alt="human-player-card"/>
+                    </div>
+                    <div class="col-md-2">
+                        <img src="images/quenn_pik.png" id="human-player-card-4" class="img-fluid" alt="human-player-card"/>
+                    </div>
+                    <div class="col-md-2">
+                        <img src="images/3_karo.png" id="human-player-card-5" class="img-fluid" alt="human-player-card"/>
+                    </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-4 pb-4">
+            <a href="https://icons8.com/icon/49139/cards">Cards icon by Icons8</a>
+        </footer>
+
+    </main>
 
     <script src="js/cards.js"></script>
     <script src="js/game.js"></script>
