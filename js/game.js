@@ -18,7 +18,7 @@ function startNewGame(event)
 
     let numberOfPlayers = parseInt(document.getElementById('players-number-input').value);
 
-    if (numberOfPlayers < minimumNumberOfPlayers || numberOfPlayers > maximumNumberOfPlayers) 
+    if (numberOfPlayers < minimumNumberOfPlayers || numberOfPlayers > maximumNumberOfPlayers || isNaN(numberOfPlayers)) 
     {
         alert(`Liczba graczy musi być w przedziale od ${minimumNumberOfPlayers} do ${maximumNumberOfPlayers}`);
 
