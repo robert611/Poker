@@ -55,26 +55,53 @@
 
         <section id="human-player-cards" class="hide container mt-5 mb-5">
 
-            <h3 class="text-center mb-5">Twoje karty</h3>
+            <h3 class="text-center mb-4">Twoje karty</h3>
 
             <div class="row">
-                <div class="col-md-1"></div>
-                    <div class="col-md-2">
-                        <img src="images/10_karo.png" id="human-player-card-1" class="img-fluid" alt="human-player-card"/>
+                <div class="col-sm-12 col-md-1 mt-3"></div>
+                <div class="col-sm-6 col-md-2 mt-3 text-center">
+                    <img src="images/10_karo.png" id="human-player-card-1" class="img-fluid human-player-card-img" alt="human-player-card"/>
+
+                    <div class="mb-3 form-check mt-2 display-flex flex-justify-center">
+                        <input type="checkbox" class="form-check-input exchange-card-input" data-cardId="1">
+                        <label class="form-check-label mx-1">Wymień</label>
                     </div>
-                    <div class="col-md-2">
-                        <img src="images/as_pik.png" id="human-player-card-2" class="img-fluid" alt="human-player-card"/>
+                </div>
+                <div class="col-sm-6 col-md-2 mt-3 text-center">
+                    <img src="images/as_pik.png" id="human-player-card-2" class="img-fluid human-player-card-img" alt="human-player-card"/>
+
+                    <div class="mb-3 form-check mt-2 display-flex flex-justify-center">
+                        <input type="checkbox" class="form-check-input exchange-card-input" data-cardId="2">
+                        <label class="form-check-label mx-1">Wymień</label>
                     </div>
-                    <div class="col-md-2">
-                        <img src="images/quenn_kier.png" id="human-player-card-3" class="img-fluid" alt="human-player-card"/>
+                </div>
+                <div class="col-sm-6 col-md-2 mt-3 text-center">
+                    <img src="images/quenn_kier.png" id="human-player-card-3" class="img-fluid human-player-card-img" alt="human-player-card"/>
+
+                    <div class="mb-3 form-check mt-2 display-flex flex-justify-center">
+                        <input type="checkbox" class="form-check-input exchange-card-input" data-cardId="3">
+                        <label class="form-check-label mx-1">Wymień</label>
                     </div>
-                    <div class="col-md-2">
-                        <img src="images/quenn_pik.png" id="human-player-card-4" class="img-fluid" alt="human-player-card"/>
+                </div>
+                <div class="col-sm-6 col-md-2 mt-3 text-center">
+                    <img src="images/quenn_pik.png" id="human-player-card-4" class="img-fluid human-player-card-img" alt="human-player-card"/>
+
+                    <div class="mb-3 form-check mt-2 display-flex flex-justify-center">
+                        <input type="checkbox" class="form-check-input exchange-card-input" data-cardId="4">
+                        <label class="form-check-label mx-1">Wymień</label>
                     </div>
-                    <div class="col-md-2">
-                        <img src="images/3_karo.png" id="human-player-card-5" class="img-fluid" alt="human-player-card"/>
+                </div>
+                <div class="col-sm-6 col-md-2 mt-3 text-center">
+                    <img src="images/3_karo.png" id="human-player-card-5" class="img-fluid human-player-card-img" alt="human-player-card"/>
+
+                    <div class="mb-3 form-check mt-2 display-flex flex-justify-center">
+                        <input type="checkbox" class="form-check-input exchange-card-input" data-cardId="5">
+                        <label class="form-check-label mx-1">Wymień</label>
                     </div>
+                </div>
             </div>
+
+            <center><button class="btn btn-primary mt-4" id="exchange-cards-button">Wymień(Maks: 4)</button></center>
         </section>
 
         <footer class="text-center pt-4 pb-4">

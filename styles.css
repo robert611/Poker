@@ -9,3 +9,15 @@
 .hide {
     display: none;
 }
+
+.display-flex {
+    display: flex;
+}
+
+.flex-justify-center {
+    justify-content: center;
+}
+
+.human-player-card-img {
+   max-height: 312px; 
+}

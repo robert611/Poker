@@ -71,6 +71,84 @@ function dealCards()
     leftCards = [...cardsArrayClone];
 }
 
+function exchangeCards()
+{
+    const cardsToExchangeIds = [];
+    const newCards = [];
+
+    let exchangeCardInputs = document.getElementsByClassName(`exchange-card-input`);
+
+    for (inputIndex in exchangeCardInputs)
+    {
+        let exchangeCardInput = exchangeCardInputs[inputIndex];
+
+        if (exchangeCardInput.checked) {
+            let cardId = exchangeCardInput.getAttribute('data-cardId');
+            cardsToExchangeIds.push(parseInt(cardId));
+        }
+    }
+
+    if (cardsToExchangeIds.length == 0)
+    {
+        return;
+    }
+
+    if (cardsToExchangeIds.length > 4)
+    {
+        alert('Możesz wymienić maksymalnie cztery karty');
+
+        return;
+    }
+
+    if (cardsToExchangeIds.length > leftCards.length)
+    {
+        alert('Doszło do błędu i zabrakło kart do wymiany, proszę odświeżyć stronę');
+
+        return;
+    }
+
+    for (let i = 1; i <= cardsToExchangeIds.length; i++)
+    {
+        let cardId = cardsToExchangeIds[i - 1];
+
+        let randomIndex = Math.floor(Math.random() * leftCards.length);
+        let newCard = leftCards[randomIndex];
+
+        newCards[cardId] = newCard;
+
+        leftCards.splice(randomIndex, 1);
+
+        players[0].cards[cardId - i] = newCard;
+    }
+
+    changeCardsImages(cardsToExchangeIds, newCards);
+    uncheckExchangeCheckboxes();
+}
+
+function changeCardsImages(cardsToExchangeIds, newCards)
+{
+    for (cardIdIndex in cardsToExchangeIds)
+    {
+        let cardId = cardsToExchangeIds[cardIdIndex];
+
+        let img = document.getElementById(`human-player-card-${parseInt(cardId)}`);
+
+        img.setAttribute('src', `images/${newCards[cardId].picture}`);
+        img.setAttribute('alt', newCards[cardId].name);
+    }
+}
+
+function uncheckExchangeCheckboxes()
+{
+    const checkboxes = document.getElementsByClassName('exchange-card-input');
+
+    for (checkboxIndex in checkboxes)
+    {
+        let checkbox = checkboxes[checkboxIndex];
+        checkbox.checked = false;
+    }
+}
+
 function showPlayerCards()
 {
     let humanPlayerCardsSection = document.getElementById('human-player-cards');
@@ -116,3 +194,5 @@ function resetPlayersStatusBar()
 }
 
 document.getElementById('start-new-game-button').addEventListener('click', (event) => { startNewGame(event) });
+
+document.getElementById('exchange-cards-button').addEventListener('click', () => exchangeCards());
