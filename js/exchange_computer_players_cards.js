@@ -112,9 +112,38 @@ function isHandRoyalFlush(computerPlayer)
     return true;
 }
 
-function isHandStraightFlush()
+function isHandStraightFlush(computerPlayer)
 {
-    
+    let lastCard = null;
+
+    let cards = computerPlayer.cards;
+
+    cards.sort((a, b) => {
+        a.number < b.number
+    });
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (lastCard == null)
+        {
+            lastCard = card;
+
+            continue;
+        }
+
+        if (lastCard.type !== card.type || lastCard.number + 1 !== card.number)
+        {
+            return false;
+        }
+
+        lastCard = card;
+    }
+
+    if (cards[0].number == 10) return false;
+
+    return true;
 }
 
 function isHandFourOfAKind()
