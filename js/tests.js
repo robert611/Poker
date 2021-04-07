@@ -173,6 +173,86 @@ function testIfComputerPlayerStraightFlushCardsWillNotBeExchanged()
     else console.info('testIfComputerPlayerStraightFlushCardsWillNotBeExchanged passed');
 }
 
+function testIfFourOfAKindCanBeRecognised()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+        {id: 22, name: 'Dziewiątka Kier', picture: '9_kier.png', type: 'kier', number: 9},
+        {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+        {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+        {id: 52, name: 'Król Karo', picture: 'king_karo.png', type: 'karo', number: 13}
+    ]};
+
+    let result = isHandFourOfAKind(player);
+
+    if (!result) console.error('Function testIfFourOfAKindCanBeRecognised does not recognise four of a kind');
+    else console.info('testIfFourOfAKindCanBeRecognised passed');
+}
+
+function testIfIsFourOfAKindRejectsOtherHand()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+        {id: 1, name: 'As Pik', picture: 'as_pik.png', type: 'pik', number: 14},
+        {id: 46, name: 'Siódemka Karo', picture: '7_karo.png', type: 'karo', number: 7},
+        {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+        {id: 52, name: 'Król Karo', picture: 'king_karo.png', type: 'karo', number: 13}
+    ]};
+
+    let result = isHandFourOfAKind(player);
+
+    if (result) console.error('Function testIfIsFourOfAKindRejectsOtherHand recognises pair as a four of a kind');
+    else console.info('testIfIsFourOfAKindRejectsOtherHand passed');
+}
+
+function testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged()
+{
+    let testPassed = true;
+
+    let players = [
+        {
+            id: 1,
+            type: 'computer',
+            cards: [
+                {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+                {id: 22, name: 'Dziewiątka Kier', picture: '9_kier.png', type: 'kier', number: 9},
+                {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+                {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+                {id: 52, name: 'Król Karo', picture: 'king_karo.png', type: 'karo', number: 13}
+            ]
+        }
+    ];
+
+    const leftCards = [
+        {id: 18, name: 'Piątka Kier', picture: '5_kier.png', type: 'kier', number: 5},
+        {id: 19, name: 'Szóstka Kier', picture: '6_kier.png', type: 'kier', number: 6},
+        {id: 20, name: 'Siódemka Kier', picture: '7_kier.png', type: 'kier', number: 7},
+        {id: 22, name: 'Dziewiątka Kier', picture: '9_kier.png', type: 'kier', number: 9},
+        {id: 23, name: 'Dziesiątka Kier', picture: '10_kier.png', type: 'kier', number: 10},
+        {id: 25, name: 'Dama Kier', picture: 'quenn_kier.png', type: 'kier', number: 12},
+        {id: 26, name: 'Król Kier', picture: 'king_kier.png', type: 'kier', number: 13}
+    ];
+
+    const originalCards = [...players[0].cards];
+
+    exchangeComputerPlayersCards(players, leftCards);
+
+    for (index in originalCards)
+    {
+        let originalCard = originalCards[index];
+        let changedCard = players[0].cards[index];
+
+        if (originalCard.name !== changedCard.name || originalCard.picture !== changedCard.picture || originalCard.type !== changedCard.type
+            || originalCard.number !== changedCard.number)
+        {
+            testPassed = false;
+        }
+    }
+
+    if (!testPassed) console.error('Function testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged exchanges cards');
+    else console.info('testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged passed');
+}
+
 function runTests()
 {
     testIfIsHandRoyalFlushRecognisesRoyalFlush();
@@ -182,6 +262,9 @@ function runTests()
     testIfStraightFlushWillBeRecognised();
     testIfIsHandStraightFlushWillRejectSthElse();
     testIfComputerPlayerStraightFlushCardsWillNotBeExchanged();
+    testIfFourOfAKindCanBeRecognised();
+    testIfIsFourOfAKindRejectsOtherHand();
+    testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged();
 }
 
 runTests();

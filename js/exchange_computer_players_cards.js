@@ -146,9 +146,32 @@ function isHandStraightFlush(computerPlayer)
     return true;
 }
 
-function isHandFourOfAKind()
+function isHandFourOfAKind(computerPlayer)
 {
+    let cards = computerPlayer.cards;
 
+    let cardsKinds = [];
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (cardsKinds.hasOwnProperty(card.number))
+        {
+            cardsKinds[card.number].push(card.number);
+        }
+        else 
+        {
+            cardsKinds[card.number] = [card.number];
+        }
+    }
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length > 3) return true;
+    }
+
+    return false;
 }
 
 function isHandFullHouse()
