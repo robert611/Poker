@@ -174,9 +174,36 @@ function isHandFourOfAKind(computerPlayer)
     return false;
 }
 
-function isHandFullHouse()
+function isHandFullHouse(computerPlayer)
 {
+    let cards = computerPlayer.cards;
 
+    let cardsKinds = [];
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (cardsKinds.hasOwnProperty(card.number))
+        {
+            cardsKinds[card.number].push(card.number);
+        }
+        else 
+        {
+            cardsKinds[card.number] = [card.number];
+        }
+    }
+
+    let isThereAPair = false;
+    let isThereAThreeOfAKind = false;
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length == 3) isThereAThreeOfAKind = true;
+        else if (cardsKinds[index].length == 2) isThereAPair = true;
+    }
+
+    return isThereAPair && isThereAThreeOfAKind;
 }
 
 function isHandFlush()

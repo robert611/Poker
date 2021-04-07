@@ -1,3 +1,28 @@
+function testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, functionName)
+{
+    let testPassed = true;
+
+    const originalCards = [...players[0].cards];
+
+    exchangeComputerPlayersCards(players, leftCards);
+
+    for (index in originalCards)
+    {
+        let originalCard = originalCards[index];
+        let changedCard = players[0].cards[index];
+
+        if (originalCard.name !== changedCard.name || originalCard.picture !== changedCard.picture || originalCard.type !== changedCard.type
+            || originalCard.number !== changedCard.number)
+        {
+            testPassed = false;
+        }
+    }
+
+    if (!testPassed) console.error(`Function ${functionName} exchanges cards`);
+    else console.info(`${functionName} passed`);
+}
+
+
 function testIfIsHandRoyalFlushRecognisesRoyalFlush()
 {
     let player = {id: 1, type: 'computer', cards: [
@@ -48,8 +73,6 @@ function testIfIsHandRoyalFlushRejectsStraightFlush()
 
 function testIfComputerPlayerRoyalFlushCardsWillNotBeExchanged()
 {
-    let testPassed = true;
-
     let players = [
         {
             id: 1,
@@ -71,24 +94,7 @@ function testIfComputerPlayerRoyalFlushCardsWillNotBeExchanged()
         {id: 8, name: 'Ósemka Pik', picture: '8_pik.png', type: 'pik', number: 8},
     ];
 
-    const originalCards = [...players[0].cards];
-
-    exchangeComputerPlayersCards(players, leftCards);
-
-    for (index in originalCards)
-    {
-        let originalCard = originalCards[index];
-        let changedCard = players[0].cards[index];
-
-        if (originalCard.name !== changedCard.name || originalCard.picture !== changedCard.picture || originalCard.type !== changedCard.type
-            || originalCard.number !== changedCard.number)
-        {
-            testPassed = false;
-        }
-    }
-
-    if (!testPassed) console.error('Function testIfComputerPlayerRoyalFlushCardsWillNotBeExchanged exchanges cards');
-    else console.info('testIfComputerPlayerRoyalFlushCardsWillNotBeExchanged passed');
+    testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerRoyalFlushCardsWillNotBeExchanged');
 }
 
 function testIfStraightFlushWillBeRecognised()
@@ -125,8 +131,6 @@ function testIfIsHandStraightFlushWillRejectSthElse()
 
 function testIfComputerPlayerStraightFlushCardsWillNotBeExchanged()
 {
-    let testPassed = true;
-
     let players = [
         {
             id: 1,
@@ -153,24 +157,7 @@ function testIfComputerPlayerStraightFlushCardsWillNotBeExchanged()
         {id: 26, name: 'Król Kier', picture: 'king_kier.png', type: 'kier', number: 13}
     ];
 
-    const originalCards = [...players[0].cards];
-
-    exchangeComputerPlayersCards(players, leftCards);
-
-    for (index in originalCards)
-    {
-        let originalCard = originalCards[index];
-        let changedCard = players[0].cards[index];
-
-        if (originalCard.name !== changedCard.name || originalCard.picture !== changedCard.picture || originalCard.type !== changedCard.type
-            || originalCard.number !== changedCard.number)
-        {
-            testPassed = false;
-        }
-    }
-
-    if (!testPassed) console.error('Function testIfComputerPlayerStraightFlushCardsWillNotBeExchanged exchanges cards');
-    else console.info('testIfComputerPlayerStraightFlushCardsWillNotBeExchanged passed');
+    testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerStraightFlushCardsWillNotBeExchanged');
 }
 
 function testIfFourOfAKindCanBeRecognised()
@@ -207,8 +194,6 @@ function testIfIsFourOfAKindRejectsOtherHand()
 
 function testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged()
 {
-    let testPassed = true;
-
     let players = [
         {
             id: 1,
@@ -233,24 +218,66 @@ function testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged()
         {id: 26, name: 'Król Kier', picture: 'king_kier.png', type: 'kier', number: 13}
     ];
 
-    const originalCards = [...players[0].cards];
+    testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged');
+}
 
-    exchangeComputerPlayersCards(players, leftCards);
+function testIfFullHouseCanBeRecognised()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+        {id: 26, name: 'Król Kier', picture: 'king_kier.png', type: 'kier', number: 13},
+        {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+        {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+        {id: 52, name: 'Król Karo', picture: 'king_karo.png', type: 'karo', number: 13}
+    ]};
 
-    for (index in originalCards)
-    {
-        let originalCard = originalCards[index];
-        let changedCard = players[0].cards[index];
+    let result = isHandFullHouse(player);
 
-        if (originalCard.name !== changedCard.name || originalCard.picture !== changedCard.picture || originalCard.type !== changedCard.type
-            || originalCard.number !== changedCard.number)
+    if (!result) console.error('Function testIfFullHouseCanBeRecognised does not recognise full house');
+    else console.info('testIfFullHouseCanBeRecognised passed');
+}
+
+function testIfIsHandFullHouseRejectsOtherHands()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+        {id: 22, name: 'Dziewiątka Kier', picture: '9_kier.png', type: 'kier', number: 9},
+        {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+        {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+        {id: 16, name: 'Trójka Kier', picture: '3_kier.png', type: 'kier', number: 3},
+    ]};
+
+    let result = isHandFullHouse(player);
+
+    if (result) console.error('Function testIfIsHandFullHouseRejectsOtherHands recognises four of a kind as full house');
+    else console.info('testIfIsHandFullHouseRejectsOtherHands passed');
+}
+
+function testIfComputerPlayerFullHouseCardsWillNotBeExchanged()
+{
+    let players = [
         {
-            testPassed = false;
+            id: 1,
+            type: 'computer',
+            cards: [
+                {id: 48, name: 'Dziewiątka Karo', picture: '9_karo.png', type: 'karo', number: 9},
+                {id: 26, name: 'Król Kier', picture: 'king_kier.png', type: 'kier', number: 13},
+                {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+                {id: 35, name: 'Dziewiątka Trefl', picture: '9_trefl.png', type: 'trefl', number: 9},
+                {id: 52, name: 'Król Karo', picture: 'king_karo.png', type: 'karo', number: 13}
+            ]
         }
-    }
+    ];
 
-    if (!testPassed) console.error('Function testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged exchanges cards');
-    else console.info('testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged passed');
+    const leftCards = [
+        {id: 18, name: 'Piątka Kier', picture: '5_kier.png', type: 'kier', number: 5},
+        {id: 19, name: 'Szóstka Kier', picture: '6_kier.png', type: 'kier', number: 6},
+        {id: 20, name: 'Siódemka Kier', picture: '7_kier.png', type: 'kier', number: 7},
+        {id: 22, name: 'Dziewiątka Kier', picture: '9_kier.png', type: 'kier', number: 9},
+        {id: 23, name: 'Dziesiątka Kier', picture: '10_kier.png', type: 'kier', number: 10}
+    ];
+
+    testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged');
 }
 
 function runTests()
@@ -265,6 +292,9 @@ function runTests()
     testIfFourOfAKindCanBeRecognised();
     testIfIsFourOfAKindRejectsOtherHand();
     testIfComputerPlayerFourOfAKindCardsWillNotBeExchanged();
+    testIfFullHouseCanBeRecognised();
+    testIfIsHandFullHouseRejectsOtherHands();
+    testIfComputerPlayerFullHouseCardsWillNotBeExchanged();
 }
 
 runTests();
