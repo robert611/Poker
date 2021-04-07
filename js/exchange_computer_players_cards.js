@@ -206,9 +206,32 @@ function isHandFullHouse(computerPlayer)
     return isThereAPair && isThereAThreeOfAKind;
 }
 
-function isHandFlush()
+function isHandFlush(computerPlayer)
 {
+    let lastCard = null;
 
+    let cards = computerPlayer.cards;
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (lastCard == null)
+        {
+            lastCard = card;
+
+            continue;
+        }
+
+        if (lastCard.type !== card.type)
+        {
+            return false;
+        }
+
+        lastCard = card;
+    }
+
+    return true;
 }
 
 function isHandStraight()
