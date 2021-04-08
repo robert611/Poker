@@ -67,7 +67,7 @@ function getComputerPlayerHand(computerPlayer)
             computerPlayerHand = {'hand_type': 'two_pairs', 'cards_not_to_exchange_ids': getTwoPairsHandCardsToExchangeIds(computerPlayer)};
             break;
         case (isHandOnePair(computerPlayer)):
-            computerPlayerHand = {'hand_type': 'one_pair', 'cards_not_to_exchange_ids': getOnePairHandCardsToExchangeIds()};
+            computerPlayerHand = {'hand_type': 'one_pair', 'cards_not_to_exchange_ids': getOnePairHandCardsToExchangeIds(computerPlayer)};
             break;
         case (isHandNoPair(computerPlayer)):
             computerPlayerHand = {'hand_type': 'no_pair', 'cards_not_to_exchange_ids': getNoPairHandCardsToExchangeIds()};
@@ -323,9 +323,20 @@ function isHandTwoPairs(computerPlayer)
     return numberOfPairs == 2;
 }
 
-function isHandOnePair()
+function isHandOnePair(computerPlayer)
 {
+    if (isHandFullHouse(computerPlayer)) return false;
 
+    let numberOfPairs = 0;
+
+    let cardsKinds = getHandCardsNumbers(computerPlayer);
+ 
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length == 2) numberOfPairs = numberOfPairs + 1;
+    }
+
+    return numberOfPairs == 1;
 }
 
 function isHandNoPair()
@@ -367,9 +378,21 @@ function getTwoPairsHandCardsToExchangeIds(computerPlayer)
     return cardsToExchangeIds;
 }
 
-function getOnePairHandCardsToExchangeIds()
+function getOnePairHandCardsToExchangeIds(computerPlayer)
 {
+    cardsKinds = getHandCardsNumbers(computerPlayer);
 
+    const cardsToExchangeIds = [];
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length !== 2) 
+        {
+            cardsToExchangeIds.push(...cardsKinds[index]);
+        }
+    }
+
+    return cardsToExchangeIds;
 }
 
 function getNoPairHandCardsToExchangeIds()
