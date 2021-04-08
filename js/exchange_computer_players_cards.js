@@ -23,7 +23,7 @@ function exchangeComputerPlayersCards(players, leftCards)
 
         if (computerPlayerHand == undefined) continue;
 
-        for (let i = 1; i < 5; i++)
+        for (let i = 1; i <= 5; i++)
         {
             if (computerPlayerHand.cards_not_to_exchange_ids.indexOf(i) == -1) continue;
 
@@ -61,7 +61,7 @@ function getComputerPlayerHand(computerPlayer)
             computerPlayerHand = {'hand_type': 'straight', 'cards_not_to_exchange_ids': []};
             break;
         case (isHandThreeOfAKind(computerPlayer)):
-            computerPlayerHand = {'hand_type': 'three_of_a_kind', 'cards_not_to_exchange_ids': getThreeOfAKindHandCardsToExchangeIds()};
+            computerPlayerHand = {'hand_type': 'three_of_a_kind', 'cards_not_to_exchange_ids': getThreeOfAKindHandCardsToExchangeIds(computerPlayer)};
             break;
         case (isHandTwoPairs(computerPlayer)):
             computerPlayerHand = {'hand_type': 'two_pairs', 'cards_not_to_exchange_ids': getTwoPairsHandCardsToExchangeIds()};
@@ -270,9 +270,43 @@ function isHandStraight(computerPlayer)
     return areThereTwoDiffrentColors;
 }
 
-function isHandThreeOfAKind()
+function getThreeOfAKindHandCardsKinds(computerPlayer)
 {
+    let cards = computerPlayer.cards;
 
+    let cardsKinds = [];
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (cardsKinds.hasOwnProperty(card.number))
+        {
+            cardsKinds[card.number].push(parseInt(cardIndex) + 1);
+        }
+        else 
+        {
+            cardsKinds[card.number] = [parseInt(cardIndex) + 1];
+        }
+    }
+
+    return cardsKinds;
+}
+
+function isHandThreeOfAKind(computerPlayer)
+{
+    let isThereThreeOfAKind = false;
+    let isThereAPair = false;
+
+    cardsKinds = getThreeOfAKindHandCardsKinds(computerPlayer);
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length == 3) isThereThreeOfAKind = true;
+        if (cardsKinds[index].length == 2) isThereAPair = true;
+    }
+
+    return (isThereThreeOfAKind == true && isThereAPair == false);
 }
 
 function isHandTwoPairs()
@@ -290,9 +324,21 @@ function isHandNoPair()
 
 }
 
-function getThreeOfAKindHandCardsToExchangeIds()
+function getThreeOfAKindHandCardsToExchangeIds(computerPlayer)
 {
+    cardsKinds = getThreeOfAKindHandCardsKinds(computerPlayer);
 
+    const cardsToExchangeIds = [];
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length !== 3) 
+        {
+            cardsToExchangeIds.push(...cardsKinds[index]);
+        }
+    }
+
+    return cardsToExchangeIds;
 }
 
 function getTwoPairsHandCardsToExchangeIds()
