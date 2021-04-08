@@ -340,6 +340,66 @@ function testIfComputerPlayerFlushCardsWillNotBeExchanged()
     testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerFlushCardsWillNotBeExchanged');
 }
 
+function testIfStraightCanBeRecognised()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 3, name: 'Trójka Pik', picture: '3_pik.png', type: 'pik', number: 3},
+        {id: 17, name: 'Czwórka Kier', picture: '4_kier.png', type: 'kier', number: 4},
+        {id: 31, name: 'Piątka Trefl', picture: '5_trefl.png', type: 'trefl', number: 5},
+        {id: 19, name: 'Szóstka Kier', picture: '6_kier.png', type: 'kier', number: 6},
+        {id: 33, name: 'Siódemka Trefl', picture: '7_trefl.png', type: 'trefl', number: 7},
+    ]};
+
+    let result = isHandStraight(player);
+
+    if (!result) console.error('Function testIfStraightCanBeRecognised does not recognise straight');
+    else console.info('testIfStraightCanBeRecognised passed');
+}
+
+function testIfIsHandStraightRejectsOtherHands()
+{
+    let player = {id: 1, type: 'computer', cards: [
+        {id: 36, name: 'Dziesiątka Trefl', picture: '10_trefl.png', type: 'trefl', number: 10},
+        {id: 37, name: 'Walet Trefl', picture: 'walet_trefl.png', type: 'trefl', number: 11},
+        {id: 38, name: 'Dama Trefl', picture: 'quenn_trefl.png', type: 'trefl', number: 12},
+        {id: 39, name: 'Król Trefl', picture: 'king_trefl.png', type: 'trefl', number: 13},
+        {id: 27, name: 'As Trefl', picture: 'as_trefl.png', type: 'trefl', number: 14}
+    ]};
+
+    let result = isHandStraight(player);
+
+    if (result) console.error('Function testIfIsHandStraightRejectsOtherHands recognises royal flush as a straight');
+    else console.info('testIfIsHandStraightRejectsOtherHands passed');
+}
+
+function testIfComputerPlayerStraightCardsWillNotBeExchanged()
+{
+    let players = [
+        {
+            id: 1,
+            type: 'computer',
+            cards: [
+                {id: 3, name: 'Trójka Pik', picture: '3_pik.png', type: 'pik', number: 3},
+                {id: 17, name: 'Czwórka Kier', picture: '4_kier.png', type: 'kier', number: 4},
+                {id: 31, name: 'Piątka Trefl', picture: '5_trefl.png', type: 'trefl', number: 5},
+                {id: 19, name: 'Szóstka Kier', picture: '6_kier.png', type: 'kier', number: 6},
+                {id: 33, name: 'Siódemka Trefl', picture: '7_trefl.png', type: 'trefl', number: 7},
+            ]
+        }
+    ];
+
+    const leftCards = [
+        {id: 5, name: 'Piątka Pik', picture: '5_pik.png', type: 'pik', number: 5},
+        {id: 6, name: 'Szóstka Pik', picture: '6_pik.png', type: 'pik', number: 6},
+        {id: 7, name: 'Siódemka Pik', picture: '7_pik.png', type: 'pik', number: 7},
+        {id: 8, name: 'Ósemka Pik', picture: '8_pik.png', type: 'pik', number: 8},
+        {id: 9, name: 'Dziewiątka Pik', picture: '9_pik.png', type: 'pik', number: 9},
+        {id: 10, name: 'Dziesiątka Pik', picture: '10_pik.png', type: 'pik', number: 10},
+    ];
+
+    testIfComputerPlayerCardsWillNotBeExchanged(players, leftCards, 'testIfComputerPlayerStraightCardsWillNotBeExchanged');
+}
+
 function runTests()
 {
     testIfIsHandRoyalFlushRecognisesRoyalFlush();
@@ -358,6 +418,9 @@ function runTests()
     testIfFlushCanBeRecognised();
     testIfIsHandFlushRejectsOtherHands();
     testIfComputerPlayerFlushCardsWillNotBeExchanged();
+    testIfStraightCanBeRecognised();
+    testIfIsHandStraightRejectsOtherHands();
+    testIfComputerPlayerStraightCardsWillNotBeExchanged
 }
 
 runTests();

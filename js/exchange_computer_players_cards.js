@@ -234,9 +234,40 @@ function isHandFlush(computerPlayer)
     return true;
 }
 
-function isHandStraight()
+function isHandStraight(computerPlayer)
 {
+    let lastCard = null;
 
+    let areThereTwoDiffrentColors = false;
+
+    let cards = computerPlayer.cards;
+
+    cards.sort((a, b) => {
+        a.number < b.number
+    });
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        if (lastCard == null)
+        {
+            lastCard = card;
+
+            continue;
+        }
+
+        if (lastCard.number + 1 !== card.number)
+        {
+            return false;
+        }
+
+        if (lastCard.type !== card.type) areThereTwoDiffrentColors = true;
+
+        lastCard = card;
+    }
+
+    return areThereTwoDiffrentColors;
 }
 
 function isHandThreeOfAKind()
