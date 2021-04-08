@@ -64,7 +64,7 @@ function getComputerPlayerHand(computerPlayer)
             computerPlayerHand = {'hand_type': 'three_of_a_kind', 'cards_not_to_exchange_ids': getThreeOfAKindHandCardsToExchangeIds(computerPlayer)};
             break;
         case (isHandTwoPairs(computerPlayer)):
-            computerPlayerHand = {'hand_type': 'two_pairs', 'cards_not_to_exchange_ids': getTwoPairsHandCardsToExchangeIds()};
+            computerPlayerHand = {'hand_type': 'two_pairs', 'cards_not_to_exchange_ids': getTwoPairsHandCardsToExchangeIds(computerPlayer)};
             break;
         case (isHandOnePair(computerPlayer)):
             computerPlayerHand = {'hand_type': 'one_pair', 'cards_not_to_exchange_ids': getOnePairHandCardsToExchangeIds()};
@@ -309,9 +309,18 @@ function isHandThreeOfAKind(computerPlayer)
     return (isThereThreeOfAKind == true && isThereAPair == false);
 }
 
-function isHandTwoPairs()
+function isHandTwoPairs(computerPlayer)
 {
+    let numberOfPairs = 0;
 
+    let cardsKinds = getHandCardsNumbers(computerPlayer);
+ 
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length == 2) numberOfPairs = numberOfPairs + 1;
+    }
+
+    return numberOfPairs == 2;
 }
 
 function isHandOnePair()
@@ -341,9 +350,21 @@ function getThreeOfAKindHandCardsToExchangeIds(computerPlayer)
     return cardsToExchangeIds;
 }
 
-function getTwoPairsHandCardsToExchangeIds()
+function getTwoPairsHandCardsToExchangeIds(computerPlayer)
 {
+    cardsKinds = getHandCardsNumbers(computerPlayer);
 
+    const cardsToExchangeIds = [];
+
+    for (index in cardsKinds)
+    {
+        if (cardsKinds[index].length !== 2) 
+        {
+            cardsToExchangeIds.push(...cardsKinds[index]);
+        }
+    }
+
+    return cardsToExchangeIds;
 }
 
 function getOnePairHandCardsToExchangeIds()
