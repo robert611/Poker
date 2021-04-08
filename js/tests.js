@@ -563,7 +563,7 @@ function testIfOnePairCanBeRecognised()
     else console.info('testIfOnePairCanBeRecognised passed');
 }
 
-function testIfIsHandTwoPairsRejectsOtherHands()
+function testIfIsHandOnePairRejectsOtherHands()
 {
     let player = {id: 1, type: 'computer', cards: [
         {id: 3, name: 'Trójka Pik', picture: '3_pik.png', type: 'pik', number: 3},
@@ -661,7 +661,7 @@ function runTests()
     testIfOnePairCanBeRecognised();
     testIfIsHandTwoPairsRejectsOtherHands();
     testIfComputerPlayerOnePairKindCardsWillBeExchanged();
-    testIfComputerPlayerNoPairsKindCardsWillBeExchanged();
+    testIfComputerPlayerNoPairsHandCardsWillBeExchanged();
 }
 
 runTests();
