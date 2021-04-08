@@ -69,9 +69,8 @@ function getComputerPlayerHand(computerPlayer)
         case (isHandOnePair(computerPlayer)):
             computerPlayerHand = {'hand_type': 'one_pair', 'cards_not_to_exchange_ids': getOnePairHandCardsToExchangeIds(computerPlayer)};
             break;
-        case (isHandNoPair(computerPlayer)):
+        default:
             computerPlayerHand = {'hand_type': 'no_pair', 'cards_not_to_exchange_ids': getNoPairHandCardsToExchangeIds()};
-            break;
     }
 
     return computerPlayerHand;
@@ -339,11 +338,6 @@ function isHandOnePair(computerPlayer)
     return numberOfPairs == 1;
 }
 
-function isHandNoPair()
-{
-
-}
-
 function getThreeOfAKindHandCardsToExchangeIds(computerPlayer)
 {
     cardsKinds = getHandCardsNumbers(computerPlayer);
@@ -397,5 +391,5 @@ function getOnePairHandCardsToExchangeIds(computerPlayer)
 
 function getNoPairHandCardsToExchangeIds()
 {
-
+    return [2, 3, 4, 5];
 }
