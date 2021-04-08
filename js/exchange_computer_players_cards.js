@@ -270,7 +270,7 @@ function isHandStraight(computerPlayer)
     return areThereTwoDiffrentColors;
 }
 
-function getThreeOfAKindHandCardsKinds(computerPlayer)
+function getHandCardsNumbers(computerPlayer)
 {
     let cards = computerPlayer.cards;
 
@@ -298,7 +298,7 @@ function isHandThreeOfAKind(computerPlayer)
     let isThereThreeOfAKind = false;
     let isThereAPair = false;
 
-    cardsKinds = getThreeOfAKindHandCardsKinds(computerPlayer);
+    cardsKinds = getHandCardsNumbers(computerPlayer);
 
     for (index in cardsKinds)
     {
@@ -326,7 +326,7 @@ function isHandNoPair()
 
 function getThreeOfAKindHandCardsToExchangeIds(computerPlayer)
 {
-    cardsKinds = getThreeOfAKindHandCardsKinds(computerPlayer);
+    cardsKinds = getHandCardsNumbers(computerPlayer);
 
     const cardsToExchangeIds = [];
 
