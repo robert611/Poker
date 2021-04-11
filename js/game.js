@@ -1,4 +1,4 @@
-const players = [];
+let players = [];
 
 const dealtCards = [];
 let leftCards = [];
