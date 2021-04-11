@@ -12,6 +12,8 @@ function startNewGame(event)
 
     resetPlayersStatusBar();
     hidePlayerCards();
+    removeComputerPlayersCardRows();
+
     showExchangeCheckboxes();
     showExchangePlayerCardButton();
 
@@ -127,6 +129,7 @@ function exchangeCards()
     uncheckExchangeCheckboxes();
     hideExchangeCheckboxes();
     hideExchangePlayerCardButton();
+    showComputerPlayerCards();
 }
 
 function changeCardsImages(cardsToExchangeIds, newCards)
@@ -205,6 +208,80 @@ function hidePlayerCards()
     let humanPlayerCardsSection = document.getElementById('human-player-cards');
 
     humanPlayerCardsSection.classList.add('hide');
+}
+
+function showComputerPlayerCards()
+{
+    let computerPlayersCardsSection = document.getElementById('computer-players-cards');
+
+    for (computerPlayerIndex in players)
+    {   
+        let computerPlayer = players[computerPlayerIndex];
+
+        if (computerPlayer.type == 'human') continue;
+
+        let cardsRow = createComputerPlayerCardsRow(computerPlayer.cards, computerPlayer.id);
+
+        computerPlayersCardsSection.appendChild(cardsRow);
+    }
+
+    computerPlayersCardsSection.classList.remove('hide');
+}
+
+function createComputerPlayerCardsRow(cards, computerPlayerId)
+{
+    let row = document.createElement('div');
+    row.classList.add('row');
+
+    let h3 = document.createElement('h3');
+    h3.classList = 'text-center mb-4 mt-4'; 
+    h3.textContent = 'Karty komputera #' + computerPlayerId;
+
+    row.appendChild(h3);
+
+    let offsetDiv = document.createElement('div');
+    offsetDiv.classList = 'col-sm-12 col-md-1 mt-3';
+
+    row.appendChild(offsetDiv);
+
+    for (cardIndex in cards)
+    {
+        let card = cards[cardIndex];
+
+        row.appendChild(createComputerPlayerCardWdiget(card));
+    }
+
+    row.appendChild(offsetDiv.cloneNode());
+
+    return row;
+}
+
+function createComputerPlayerCardWdiget(card)
+{
+    let cardDiv = document.createElement('div');
+    cardDiv.classList = 'col-sm-6 col-md-2 mt-3 text-center';
+
+    let img = document.createElement('img');
+    img.classList = 'img-fluid human-player-card-img';
+    img.setAttribute('src', `images/${card.picture}`);
+    img.setAttribute('alt', card.picture);
+
+    cardDiv.appendChild(img);
+
+    return cardDiv;
+}
+
+function removeComputerPlayersCardRows()
+{
+    let computerPlayersCardsSection = document.getElementById('computer-players-cards');
+
+    let computerPlayersCardsRows = document.querySelectorAll('#computer-players-cards .row');
+
+    Array.from(computerPlayersCardsRows).forEach((row) => {
+        row.remove();
+    })
+
+    computerPlayersCardsSection.classList.add('hide');
 }
 
 function updatePlayersStatusBar(numberOfPlayers)
