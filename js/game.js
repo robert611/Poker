@@ -118,7 +118,7 @@ function exchangeCards()
 
         leftCards.splice(randomIndex, 1);
 
-        players[0].cards[cardId - i] = newCard;
+        players[0].cards[cardId - 1] = newCard;
     }
 
     changeCardsImages(cardsToExchangeIds, newCards);
