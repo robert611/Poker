@@ -12,6 +12,8 @@ function startNewGame(event)
 
     resetPlayersStatusBar();
     hidePlayerCards();
+    showExchangeCheckboxes();
+    showExchangePlayerCardButton();
 
     let minimumNumberOfPlayers = 2;
     let maximumNumberOfPlayers = 4;
@@ -123,6 +125,8 @@ function exchangeCards()
 
     changeCardsImages(cardsToExchangeIds, newCards);
     uncheckExchangeCheckboxes();
+    hideExchangeCheckboxes();
+    hideExchangePlayerCardButton();
 }
 
 function changeCardsImages(cardsToExchangeIds, newCards)
@@ -147,6 +151,38 @@ function uncheckExchangeCheckboxes()
         let checkbox = checkboxes[checkboxIndex];
         checkbox.checked = false;
     }
+}
+
+function hideExchangeCheckboxes()
+{
+    let checkboxes = document.getElementsByClassName('exchange-checkbox-div'); 
+
+    Array.from(checkboxes).forEach((checkbox) => {
+        checkbox.classList.add('hide');
+    })
+}
+
+function showExchangeCheckboxes()
+{
+    let checkboxes = document.getElementsByClassName('exchange-checkbox-div'); 
+
+    Array.from(checkboxes).forEach((checkbox) => {
+        checkbox.classList.remove('hide');
+    })
+}
+
+function hideExchangePlayerCardButton()
+{
+    let button = document.getElementById('exchange-cards-button'); 
+
+    button.classList.add('hide');
+}
+
+function showExchangePlayerCardButton()
+{
+    let button = document.getElementById('exchange-cards-button'); 
+
+    button.classList.remove('hide');
 }
 
 function showPlayerCards()
