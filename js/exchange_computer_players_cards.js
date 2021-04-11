@@ -35,6 +35,8 @@ function exchangeComputerPlayersCards(players, leftCards)
             computerPlayer.cards[i - 1] = newCard;
         }
     }
+
+    return players;
 }
 
 function getComputerPlayerHand(computerPlayer) 

@@ -195,4 +195,7 @@ function resetPlayersStatusBar()
 
 document.getElementById('start-new-game-button').addEventListener('click', (event) => { startNewGame(event) });
 
-document.getElementById('exchange-cards-button').addEventListener('click', () => exchangeCards());
+document.getElementById('exchange-cards-button').addEventListener('click', () => {
+    exchangeCards();
+    players = exchangeComputerPlayersCards(players, leftCards);
+});
