@@ -1,16 +1,3 @@
-const cardsToExchangeWithGivenHand = {
-    no_pair: 4,
-    one_pair: 3,
-    two_pairs: 1,
-    three_of_a_kind: 2,
-    straight: 0,
-    flush: 0,
-    full_house: 0,
-    four_of_a_kind: 0,
-    straight_flush: 0,
-    royal_flush: 0
-};
-
 function exchangeComputerPlayersCards(players, leftCards)
 {
     for (computerPlayerIndex in players)

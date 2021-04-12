@@ -13,6 +13,7 @@ function startNewGame(event)
     resetPlayersStatusBar();
     hidePlayerCards();
     removeComputerPlayersCardRows();
+    hideResults();
 
     showExchangeCheckboxes();
     showExchangePlayerCardButton();
@@ -125,6 +126,7 @@ function exchangeCards()
     hideExchangeCheckboxes();
     hideExchangePlayerCardButton();
     showComputerPlayerCards();
+    rankPlayers();
 }
 
 function changeCardsImages(cardsToExchangeIds, newCards)
