@@ -92,11 +92,6 @@ function exchangeCards()
         }
     }
 
-    if (cardsToExchangeIds.length == 0)
-    {
-        return;
-    }
-
     if (cardsToExchangeIds.length > 4)
     {
         alert('Możesz wymienić maksymalnie cztery karty');
