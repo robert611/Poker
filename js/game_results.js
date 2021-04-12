@@ -24,51 +24,52 @@ const handsTranslation = {
     royal_flush: "Poker królewski"
 }
 
-function rankPlayers()
-{
-    let results = [];
+const rankPlayers = () => {
+    return new Promise((resolve, reject) => {
+        let results = [];
 
-    for (playerIndex in players)
-    {
-        let player = players[playerIndex];
-
-        let playerHand = getComputerPlayerHand(player);
-
-        let name = player.type == "computer" ? "Computer #" + player.id : "Player";
-
-        let playerResult = {player_name: name, hand_name: handsTranslation[playerHand.hand_type], hand_strength: handsStrength[playerHand.hand_type], place: null};
-
-        results.push(playerResult);
-    }
-
-    results = results.sort((a, b) => {
-        return b.hand_strength - a.hand_strength;
-    });
-
-    let previousResult = null;
-
-    for (resultIndex in results)
-    {
-        let result = results[resultIndex];
-
-        if (previousResult == null)
+        for (playerIndex in players)
         {
-            result.place = 1;
-        }
-        else if (previousResult.hand_strength != result.hand_strength)
-        {
-            result.place = previousResult.place + 1;
-        } 
-        else
-        {
-            result.place = previousResult.place;
+            let player = players[playerIndex];
+
+            let playerHand = getComputerPlayerHand(player);
+
+            let name = player.type == "computer" ? "Computer #" + player.id : "Player";
+
+            let playerResult = {player_name: name, hand_name: handsTranslation[playerHand.hand_type], hand_strength: handsStrength[playerHand.hand_type], place: null};
+
+            results.push(playerResult);
         }
 
-        previousResult = result;
-    }
+        results = results.sort((a, b) => {
+            return b.hand_strength - a.hand_strength;
+        });
 
-    displayResults(results);
-}
+        let previousResult = null;
+
+        for (resultIndex in results)
+        {
+            let result = results[resultIndex];
+
+            if (previousResult == null)
+            {
+                result.place = 1;
+            }
+            else if (previousResult.hand_strength != result.hand_strength)
+            {
+                result.place = previousResult.place + 1;
+            } 
+            else
+            {
+                result.place = previousResult.place;
+            }
+
+            previousResult = result;
+        }
+
+        resolve(results);
+    }
+)};
 
 function displayResults(results)
 {

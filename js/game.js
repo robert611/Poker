@@ -3,54 +3,67 @@ let players = [];
 const dealtCards = [];
 let leftCards = [];
 
-function startNewGame(event)
-{
-    event.preventDefault();
-
-    players.length = 0;
-    dealtCards.length = 0;
-
-    resetPlayersStatusBar();
-    hidePlayerCards();
-    removeComputerPlayersCardRows();
-    hideResults();
-
-    showExchangeCheckboxes();
-    showExchangePlayerCardButton();
-
-    let minimumNumberOfPlayers = 2;
-    let maximumNumberOfPlayers = 4;
-
-    let numberOfPlayers = parseInt(document.getElementById('players-number-input').value);
-
-    if (numberOfPlayers < minimumNumberOfPlayers || numberOfPlayers > maximumNumberOfPlayers || isNaN(numberOfPlayers)) 
+const startNewGame = (event) => { 
+    new Promise((resolve, reject) => 
     {
-        alert(`Liczba graczy musi być w przedziale od ${minimumNumberOfPlayers} do ${maximumNumberOfPlayers}`);
+        event.preventDefault();
 
-        return;
-    }
+        players.length = 0;
+        dealtCards.length = 0;
 
-    for (let i = 1; i <= numberOfPlayers; i++)
-    {
-        if (i == 1) {
-            players.push({
-                id: 1, type: 'human', cards: []
-            });
+        resetPlayersStatusBar();
+        hidePlayerCards();
+        removeComputerPlayersCardRows();
+        hideResults();
+
+        showExchangeCheckboxes();
+        showExchangePlayerCardButton();
+
+        let minimumNumberOfPlayers = 2;
+        let maximumNumberOfPlayers = 4;
+
+        let numberOfPlayers = parseInt(document.getElementById('players-number-input').value);
+
+        if (numberOfPlayers < minimumNumberOfPlayers || numberOfPlayers > maximumNumberOfPlayers || isNaN(numberOfPlayers)) 
+        {
+            alert(`Liczba graczy musi być w przedziale od ${minimumNumberOfPlayers} do ${maximumNumberOfPlayers}`);
+
+            return;
         }
-        else {
-            players.push({
-                id: i,
-                type: 'computer',
-                cards: []
-            });  
+
+        for (let i = 1; i <= numberOfPlayers; i++)
+        {
+            if (i == 1) {
+                players.push({
+                    id: 1, type: 'human', cards: []
+                });
+            }
+            else {
+                players.push({
+                    id: i,
+                    type: 'computer',
+                    cards: []
+                });  
+            }
         }
-    }
 
-    updatePlayersStatusBar(numberOfPlayers);
+        resolve(numberOfPlayers);
+    })
+    .then((numberOfPlayers) => updatePlayersStatusBar(numberOfPlayers)) 
+    .then(() => dealCards())
+    .then(() => showPlayerCards())
+}
 
-    dealCards();
-
-    showPlayerCards();
+function handleExchange() {
+    exchangeCards()
+    .then((response) => changeCardsImages(response[0], response[1]))
+    .then(exchangeComputerPlayersCards(players, leftCards))
+    .then(uncheckExchangeCheckboxes())
+    .then(hideExchangeCheckboxes())
+    .then(hideExchangePlayerCardButton())
+    .then(showComputerPlayerCards())
+    .then(() => {return rankPlayers()})
+    .then((results) => displayResults(results))
 }
 
 function dealCards()
@@ -76,58 +89,55 @@ function dealCards()
     leftCards = [...cardsArrayClone];
 }
 
-function exchangeCards()
-{
-    const cardsToExchangeIds = [];
-    const newCards = [];
-
-    let exchangeCardInputs = document.getElementsByClassName(`exchange-card-input`);
-
-    for (inputIndex in exchangeCardInputs)
+const exchangeCards = () => {
+    return new Promise((resolve, reject) => 
     {
-        let exchangeCardInput = exchangeCardInputs[inputIndex];
+        const cardsToExchangeIds = [];
+        const newCards = [];
 
-        if (exchangeCardInput.checked) {
-            let cardId = exchangeCardInput.getAttribute('data-cardId');
-            cardsToExchangeIds.push(parseInt(cardId));
+        let exchangeCardInputs = document.getElementsByClassName(`exchange-card-input`);
+
+        for (inputIndex in exchangeCardInputs)
+        {
+            let exchangeCardInput = exchangeCardInputs[inputIndex];
+
+            if (exchangeCardInput.checked) {
+                let cardId = exchangeCardInput.getAttribute('data-cardId');
+                cardsToExchangeIds.push(parseInt(cardId));
+            }
         }
-    }
 
-    if (cardsToExchangeIds.length > 4)
-    {
-        alert('Możesz wymienić maksymalnie cztery karty');
+        if (cardsToExchangeIds.length > 4)
+        {
+            alert('Możesz wymienić maksymalnie cztery karty');
 
-        return;
-    }
+            return;
+        }
 
-    if (cardsToExchangeIds.length > leftCards.length)
-    {
-        alert('Doszło do błędu i zabrakło kart do wymiany, proszę odświeżyć stronę');
+        if (cardsToExchangeIds.length > leftCards.length)
+        {
+            alert('Doszło do błędu i zabrakło kart do wymiany, proszę odświeżyć stronę');
 
-        return;
-    }
+            return;
+        }
 
-    for (let i = 1; i <= cardsToExchangeIds.length; i++)
-    {
-        let cardId = cardsToExchangeIds[i - 1];
+        for (let i = 1; i <= cardsToExchangeIds.length; i++)
+        {
+            let cardId = cardsToExchangeIds[i - 1];
 
-        let randomIndex = Math.floor(Math.random() * leftCards.length);
-        let newCard = leftCards[randomIndex];
+            let randomIndex = Math.floor(Math.random() * leftCards.length);
+            let newCard = leftCards[randomIndex];
 
-        newCards[cardId] = newCard;
+            newCards[cardId] = newCard;
 
-        leftCards.splice(randomIndex, 1);
+            leftCards.splice(randomIndex, 1);
 
-        players[0].cards[cardId - 1] = newCard;
-    }
+            players[0].cards[cardId - 1] = newCard;
+        }
 
-    changeCardsImages(cardsToExchangeIds, newCards);
-    uncheckExchangeCheckboxes();
-    hideExchangeCheckboxes();
-    hideExchangePlayerCardButton();
-    showComputerPlayerCards();
-    rankPlayers();
-}
+        resolve([cardsToExchangeIds, newCards]);
+    })
+};
 
 function changeCardsImages(cardsToExchangeIds, newCards)
 {
@@ -303,9 +313,5 @@ function resetPlayersStatusBar()
     }
 }
 
-document.getElementById('start-new-game-button').addEventListener('click', (event) => { startNewGame(event) });
-
-document.getElementById('exchange-cards-button').addEventListener('click', () => {
-    exchangeCards();
-    players = exchangeComputerPlayersCards(players, leftCards);
-});
+document.getElementById('start-new-game-button').addEventListener('click', (event) => startNewGame(event));
+document.getElementById('exchange-cards-button').addEventListener('click', handleExchange);
